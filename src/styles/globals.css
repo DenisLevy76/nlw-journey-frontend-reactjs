@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  @apply min-w-0;
+}
+
+a {
+  @apply text-zinc-300 underline;
+}
+
+::-webkit-scrollbar {
+  @apply bg-zinc-950 w-2 rounded-md;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-zinc-950  rounded-md;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-zinc-800  rounded-md;
+}
