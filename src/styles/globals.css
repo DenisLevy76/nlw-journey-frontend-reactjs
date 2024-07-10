@@ -10,6 +10,10 @@ a {
   @apply text-zinc-300 underline;
 }
 
+strong {
+  @apply text-zinc-100 font-semibold;
+}
+
 ::-webkit-scrollbar {
   @apply bg-zinc-950 w-2 rounded-md;
 }

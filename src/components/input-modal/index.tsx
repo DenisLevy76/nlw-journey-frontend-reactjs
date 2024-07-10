@@ -38,7 +38,7 @@ export const InputModal: React.FC = () => {
           <UserRoundPlus className='text-zinc-400' />
           <input
             type='text'
-            placeholder='Quem estará na viagem??'
+            placeholder='Quem estará na viagem?'
             readOnly
             value={
               invites.length > 0
@@ -97,8 +97,8 @@ export const InputModal: React.FC = () => {
                 className='flex items-center gap-2 bg-zinc-950 p-3 rounded-xl border border-zinc-800'
                 onSubmit={handleSubmit(onSubmit)}
               >
-                <label className='flex gap-2 w-full'>
-                  <AtSign className='w-8 h-8 text-zinc-400' />
+                <label className='flex gap-2 w-full items-center'>
+                  <AtSign className='w-5 h-5 text-zinc-400' />
                   <input
                     {...register('inviteMail')}
                     type='email'

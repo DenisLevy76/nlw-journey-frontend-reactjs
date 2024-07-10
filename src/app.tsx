@@ -2,6 +2,7 @@ import { ArrowRight, Calendar, MapPin, Settings2 } from 'lucide-react'
 import { LogoLarge } from './components/logo-large-icon'
 import { useState } from 'react'
 import { InputModal } from './components/input-modal'
+import { ConfirmationModal } from './components/confirmation-modal'
 
 export const App: React.FC = () => {
   const [isOnPassTwo, setIsOnPassTwo] = useState<boolean>(false)
@@ -60,10 +61,7 @@ export const App: React.FC = () => {
           {isOnPassTwo && (
             <fieldset className='flex items-center gap-4 bg-zinc-900 py-3 px-6 rounded-xl shadow-custom-border'>
               <InputModal />
-              <button className='flex gap-2 items-center justify-center min-w-fit px-5 py-2 rounded-xl bg-lime-300 text-lime-950 hover:brightness-110 transition-colors'>
-                Confirmar viagem
-                <ArrowRight className='flex w-5 h-5 text-lime-950' />
-              </button>
+              <ConfirmationModal />
             </fieldset>
           )}
         </form>
