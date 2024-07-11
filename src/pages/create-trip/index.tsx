@@ -61,6 +61,7 @@ export const CreateTripPage: React.FC = () => {
           editMode={!isOnPassTwo}
           setDate={setEventStartAndEndDates}
           date={eventStartAndEndDates}
+          destination={destination}
           setDestination={setDestination}
         />
         {isOnPassTwo && (

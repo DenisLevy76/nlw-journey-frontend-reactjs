@@ -17,6 +17,7 @@ interface Props {
   setDestination: (value: string) => void
   setDate: (date: DateRange | undefined) => void
   date?: DateRange
+  destination: string
   editMode?: boolean
 }
 
@@ -26,10 +27,14 @@ export const LocationsAndDateInput: React.FC<Props> = ({
   setDate,
   setDestination,
   date,
+  destination,
 }) => {
   const [isOnEditMode, setIsOnEditMode] = useState<boolean>(editMode || false)
   const { register, handleSubmit } = useForm<LocationsAndDateInputData>({
     resolver: zodResolver(formSchema),
+    values: {
+      destination,
+    },
   })
 
   const handleOnSubmit = (data: LocationsAndDateInputData) => {
