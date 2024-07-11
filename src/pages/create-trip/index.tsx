@@ -3,9 +3,34 @@ import { useState } from 'react'
 import { ConfirmationModal } from '../../components/confirmation-modal'
 import { InputModal } from '../../components/input-modal'
 import { LogoLarge } from '../../components/logo-large-icon'
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
+import dayjs from 'dayjs'
+
+const formSchema = z.object({
+  destination: z.string(),
+  when: z.string().transform((date) => dayjs(date, 'DD/MM/YYYY')),
+})
+
+type FormSchemaType = z.infer<typeof formSchema>
 
 export const CreateTripPage: React.FC = () => {
   const [isOnPassTwo, setIsOnPassTwo] = useState<boolean>(false)
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormSchemaType>({
+    resolver: zodResolver(formSchema),
+  })
+
+  console.log(errors)
+
+  const onSubmit = (data: FormSchemaType) => {
+    console.log(data)
+    setIsOnPassTwo(true)
+  }
 
   return (
     <main className='h-screen flex items-center justify-center px-4 bg-pattern bg-no-repeat bg-center bg-cover'>
@@ -18,12 +43,16 @@ export const CreateTripPage: React.FC = () => {
             Convide seus amigos e planeje sua próxima viagem!
           </strong>
         </header>
-        <form className='space-y-4'>
+        <form
+          className='space-y-4'
+          onSubmit={handleSubmit(onSubmit)}
+        >
           <fieldset className='flex items-center gap-4 bg-zinc-900 py-3 px-6 rounded-xl shadow-custom-border'>
             <label className='flex items-center gap-2 w-full'>
               <MapPin className='text-zinc-400' />
               <input
                 readOnly={isOnPassTwo}
+                {...register('destination')}
                 type='text'
                 placeholder='Para onde você vai?'
                 className='bg-transparent outline-none w-full placeholder-zinc-400'
@@ -32,6 +61,7 @@ export const CreateTripPage: React.FC = () => {
             <label className='flex items-center gap-2'>
               <Calendar className='text-zinc-400' />
               <input
+                {...register('when')}
                 readOnly={isOnPassTwo}
                 type='text'
                 placeholder='Quando?'
@@ -41,7 +71,7 @@ export const CreateTripPage: React.FC = () => {
             <div className='w-[1px] bg-zinc-800 h-6' />
             {!isOnPassTwo && (
               <button
-                onClick={() => setIsOnPassTwo(true)}
+                type='submit'
                 className='flex gap-2 items-center justify-center min-w-fit px-5 py-2 rounded-xl bg-lime-300 text-lime-950 hover:brightness-110 transition-colors'
               >
                 Continuar
