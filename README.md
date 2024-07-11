@@ -1,4 +1,5 @@
 # Plann.er
+![image](https://github.com/DenisLevy76/nlw-journey-frontend-reactjs/assets/62116847/560ec374-d187-4868-b63b-dab8580cbb3e)
 
 ## Descrição
 
@@ -13,11 +14,7 @@ Bem-vindo ao Plann.er! Esta aplicação permite registrar suas viagens, organiza
 
 ## Tecnologias Utilizadas
 
-- **TypeScript**: Para garantir um código mais seguro e eficiente.
-- **ReactJS**: Biblioteca para construção da interface de usuário.
-- **Tailwind CSS**: Framework de CSS para estilização rápida e responsiva.
-- **Vite**: Ferramenta de build rápida e leve.
-- **Git e GitHub**: Controle de versão e hospedagem do código.
+**TypeScript**, **ReactJS**, **Tailwind CSS**, **Vite**
 
 ## Design
 
