@@ -45,7 +45,7 @@ export const ConfirmationModal: React.FC = () => {
             placeholder='Seu e-mail pessoal'
             prefixIcon={<Mail className='size-5' />}
           />
-          <Button>Confirmar criação da viagem</Button>
+          <Button className='w-full'>Confirmar criação da viagem</Button>
         </form>
       </ModalContent>
     </ModalRoot>
