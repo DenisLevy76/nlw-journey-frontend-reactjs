@@ -2,12 +2,52 @@ import { CircleCheck, Plus } from 'lucide-react'
 import { Button } from '../../components/button'
 import { LocationsAndDateInput } from '../../components/locations-and-date-input'
 import { TripDetailsAside } from './components/aside'
+import { useCallback, useEffect, useState } from 'react'
+import { DateRange } from 'react-day-picker'
+import { useParams } from 'react-router-dom'
+import { api } from '../../lib/axios'
+
+export interface Trip {
+  id: string
+  destination: string
+  starts_at: string
+  ends_at: string
+  is_confirmed: boolean
+}
 
 export const TripDetailsPage: React.FC = () => {
+  const { id } = useParams()
+  const [details, setDetails] = useState<null | Trip>(null)
+  const [eventStartAndEndDates, setEventStartAndEndDates] = useState<
+    DateRange | undefined
+  >()
+  const [destination, setDestination] = useState('')
+
+  const fetchTripDetails = useCallback(async () => {
+    const { data } = await api.get<{ trip: Trip }>(`/trips/${id}`)
+
+    if (data?.trip)
+      setEventStartAndEndDates({
+        from: new Date(data.trip?.starts_at || ''),
+        to: new Date(data.trip?.ends_at || ''),
+      })
+
+    setDetails(data.trip)
+  }, [id])
+
+  useEffect(() => {
+    fetchTripDetails()
+  }, [fetchTripDetails])
+
   return (
     <main className='max-w-[1100px] mx-auto p-8'>
       <header>
-        <LocationsAndDateInput onSubmit={() => {}} />
+        <LocationsAndDateInput
+          onSubmit={() => {}}
+          setDate={setEventStartAndEndDates}
+          date={eventStartAndEndDates}
+          setDestination={setDestination}
+        />
       </header>
       <div className='grid grid-cols-[1fr_350px] gap-16 mt-8'>
         <div>
