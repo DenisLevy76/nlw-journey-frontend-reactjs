@@ -9,8 +9,19 @@ import {
 } from '../modal'
 import { Input } from '../input'
 import { Button } from '../button'
+import { FormEvent } from 'react'
 
-export const ConfirmationModal: React.FC = () => {
+interface Props {
+  setOwnerName: (value: string) => void
+  setOwnerEmail: (value: string) => void
+  onSubmit: (event: FormEvent) => void
+}
+
+export const ConfirmationModal: React.FC<Props> = ({
+  setOwnerEmail,
+  setOwnerName,
+  onSubmit,
+}) => {
   return (
     <ModalRoot>
       <ModalTrigger asChild>
@@ -34,15 +45,20 @@ export const ConfirmationModal: React.FC = () => {
             </button>
           </ModalClose>
         </header>
-        <form className='flex flex-col gap-2'>
+        <form
+          className='flex flex-col gap-2'
+          onSubmit={onSubmit}
+        >
           <Input
             type='text'
             placeholder='Seu nome completo'
+            onChange={(event) => setOwnerName(event.target.value)}
             prefixIcon={<User className='size-5' />}
           />
           <Input
             type='text'
             placeholder='Seu e-mail pessoal'
+            onChange={(event) => setOwnerEmail(event.target.value)}
             prefixIcon={<Mail className='size-5' />}
           />
           <Button className='w-full'>Confirmar criação da viagem</Button>

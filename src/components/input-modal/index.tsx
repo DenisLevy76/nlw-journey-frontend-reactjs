@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as Dialog from '@radix-ui/react-dialog'
 import { AtSign, Plus, UserRoundPlus, X } from 'lucide-react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
@@ -11,7 +11,9 @@ const formSchema = z.object({
 
 type FormSchemaType = z.infer<typeof formSchema>
 
-export const InputModal: React.FC = () => {
+export const InputModal: React.FC<{
+  onChange: (value: string[]) => void
+}> = ({ onChange }) => {
   const [invites, setInvites] = useState<string[]>([])
   const { register, handleSubmit, reset } = useForm<FormSchemaType>({
     resolver: zodResolver(formSchema),
@@ -30,6 +32,10 @@ export const InputModal: React.FC = () => {
     handleAddInvite(data.inviteMail)
     reset()
   }
+
+  useEffect(() => {
+    onChange(invites)
+  }, [invites])
 
   return (
     <Dialog.Root>

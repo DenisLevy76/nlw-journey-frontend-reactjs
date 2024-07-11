@@ -2,24 +2,30 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { ArrowRight, Calendar, MapPin, Settings2 } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
-import dayjs from 'dayjs'
 import { useState } from 'react'
+import { DatePickerWithRange } from '../date-picker-range'
+import { DateRange } from 'react-day-picker'
 
 const formSchema = z.object({
   destination: z.string(),
-  when: z.string().transform((date) => dayjs(date, 'DD/MM/YYYY').toDate()),
 })
 
 export type LocationsAndDateInputData = z.infer<typeof formSchema>
 
 interface Props {
   onSubmit: (data: LocationsAndDateInputData) => void
+  setDestination: (value: string) => void
+  setDate: (date: DateRange | undefined) => void
+  date?: DateRange
   editMode?: boolean
 }
 
 export const LocationsAndDateInput: React.FC<Props> = ({
   editMode,
   onSubmit,
+  setDate,
+  setDestination,
+  date,
 }) => {
   const [isOnEditMode, setIsOnEditMode] = useState<boolean>(editMode || false)
   const { register, handleSubmit } = useForm<LocationsAndDateInputData>({
@@ -28,6 +34,7 @@ export const LocationsAndDateInput: React.FC<Props> = ({
 
   const handleOnSubmit = (data: LocationsAndDateInputData) => {
     setIsOnEditMode(false)
+    setDestination(data.destination)
     onSubmit(data)
   }
 
@@ -49,12 +56,10 @@ export const LocationsAndDateInput: React.FC<Props> = ({
         </label>
         <label className='flex items-center gap-2'>
           <Calendar className='text-zinc-400' />
-          <input
-            {...register('when')}
-            readOnly={!isOnEditMode}
-            type='text'
-            placeholder='Quando?'
-            className='bg-transparent outline-none w-full placeholder-zinc-400'
+          <DatePickerWithRange
+            date={date}
+            setDate={setDate}
+            disabled={!isOnEditMode}
           />
         </label>
         <div className='w-[1px] bg-zinc-800 h-6' />
